@@ -34,7 +34,7 @@ MAKEFLAGS = --no-print-directory
 all:	make_libft $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -l$(LIBFT_NAME) -lm
+	$(CC) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -l$(LIBFT_NAME)
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)

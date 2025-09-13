@@ -7,6 +7,22 @@
 
 #define MAX 100
 
+static double ft_fmax(double a, double b)
+{
+	if (a > b)
+		return a;
+	else
+		return b;
+}
+
+static double ft_fmin(double a, double b)
+{
+	if (a < b)
+		return a;
+	else
+		return b;
+}
+
 static int is_column_full(t_grid *grid, int col)
 {
 	return grid->height == (unsigned int)grid->level[col];
@@ -25,11 +41,6 @@ void	display_debug_grid(t_grid *grid)
 		}
 		ft_printf("\n");
 	}
-}
-
-void print_levels(t_grid *grid)
-{
-	ft_printf("%d %d %d %d %d %d %d %d\n", grid->level[0], grid->level[1], grid->level[2], grid->level[3], grid->level[4], grid->level[5], grid->level[6], grid->level[7]);
 }
 
 static float minimax(t_grid *grid, int depth, float alpha, float beta, int maximizingPlayer, int width, int height)
@@ -60,8 +71,8 @@ static float minimax(t_grid *grid, int depth, float alpha, float beta, int maxim
 			grid->level[col]--;
 			GRID_AT(grid, col, row) = EMPTY;
 	
-			minEval = fmin(minEval, eval);
-			beta = fmin(beta, eval);
+			minEval = ft_fmin(minEval, eval);
+			beta = ft_fmin(beta, eval);
 	
 			if (beta <= alpha)
 				break;
@@ -90,8 +101,8 @@ static float minimax(t_grid *grid, int depth, float alpha, float beta, int maxim
 	
 			grid->level[col]--;
 			GRID_AT(grid, col, row) = EMPTY;
-			maxEval = fmax(maxEval, eval);
-			alpha = fmax(alpha, eval);
+			maxEval = ft_fmax(maxEval, eval);
+			alpha = ft_fmax(alpha, eval);
 	
 			if (beta <= alpha)
 				break;
@@ -99,7 +110,6 @@ static float minimax(t_grid *grid, int depth, float alpha, float beta, int maxim
 		return maxEval;
 	}
 }
-		#include <stdio.h>
 
 int find_best_move(t_grid *grid, int width, int height, int depth)
 {
@@ -111,13 +121,11 @@ int find_best_move(t_grid *grid, int width, int height, int depth)
 		if (is_column_full(grid, col)) continue;
 		
 		int row = grid->level[col];
-		// print_levels(grid);
 		grid->level[col]++;
 		GRID_AT(grid, col, row) = BOT;
 		float eval = minimax(grid, depth - 1, -INFINITY, INFINITY, 1, width, height);
 		grid->level[col]--;
 		GRID_AT(grid, col, row) = EMPTY;
-		// print_levels(grid);
 		printf("Col %d: eval %f\n",col, eval);
 		
 		if (eval > maxEval)
