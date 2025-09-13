@@ -61,7 +61,15 @@ static inline void	display_endline(unsigned int width)
 	for (unsigned int xi = 0; xi < width; xi++)
 		printf("┷━━━━");
 	printf("┛\n");
-	printf("  1    2    3    4    5    6    7\n");
+	unsigned int	i = 1;
+	printf("  ");
+	while (i <= width && i < 10)
+		printf("%d    ", i);
+	while (i <= width && i < 100)
+		printf("%d   ", i);
+	while (i <= width && i < 1000)
+		printf("%d  ", i);
+	printf("\n");
 }
 
 void	display_grid(t_grid *grid)
