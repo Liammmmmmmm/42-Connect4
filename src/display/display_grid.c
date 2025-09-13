@@ -58,17 +58,26 @@ static inline void	display_line(t_grid *grid, unsigned int yi)
 static inline void	display_endline(unsigned int width)
 {
 	ft_printf("┗━━━━");
-	for (unsigned int xi = 0; xi < width; xi++)
+	for (unsigned int xi = 0; xi < width - 1; xi++)
 		ft_printf("┷━━━━");
 	ft_printf("┛\n");
 	unsigned int	i = 1;
 	ft_printf("  ");
 	while (i <= width && i < 10)
+	{
 		ft_printf("%d    ", i);
+		i++;
+	}
 	while (i <= width && i < 100)
+	{
 		ft_printf("%d   ", i);
+		i++;
+	}
 	while (i <= width && i < 1000)
+	{
 		ft_printf("%d  ", i);
+		++i;
+	}
 	ft_printf("\n");
 }
 
@@ -80,5 +89,5 @@ void	display_grid(t_grid *grid)
 		display_delimitation(yi, grid->width - 1);
 		display_line(grid, grid->height - yi - 1);
 	}
-	display_endline(grid->width - 1);
+	display_endline(grid->width);
 }

@@ -22,8 +22,6 @@
 # define COOLNESS 0
 # define LOG_COOL 0
 
-extern t_game *g_game;
-
 int		init_game(t_game *game, int g_width, int g_height);
 
 void	put_usage(char *bin_name);

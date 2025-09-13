@@ -101,7 +101,6 @@ int	is_num_only(char *str)
 	return (1);
 }
 
-t_game	*g_game;
 
 int	main(int ac, char **av)
 {
@@ -110,7 +109,6 @@ int	main(int ac, char **av)
 	int		grid_width;
 	int		grid_height;
 
-	g_game = &game;
 	if (ac != 3)
 	{
 		put_usage(av[0]);
