@@ -8,20 +8,20 @@
 
 static int is_column_full(t_grid *grid, int col)
 {
-	return GRID_AT(grid, 0, col) != ' ';
+	return grid->height == (unsigned int)grid->level[col];
 }
 
 static int get_available_row(t_grid *grid, int col)
 {
 	for (int row = grid->height - 1 ; row >= 0 ; row--)
 	{
-		if (GRID_AT(grid, row, col) == ' ')
+		if (GRID_AT(grid, row, col) == EMPTY)
 			return row;
 	}
 	return -1;
 }
 
-static int minimax(t_grid *grid, int depth, int alpha, int beta, int maximizingPlayer, int width, int height)
+static float minimax(t_grid *grid, int depth, int alpha, int beta, int maximizingPlayer, int width, int height)
 {
 	if (depth == 0)
 		return evaluate_board(grid);
@@ -38,7 +38,7 @@ static int minimax(t_grid *grid, int depth, int alpha, int beta, int maximizingP
 
 			int eval = minimax(grid, depth - 1, alpha, beta, 0, width, height);
 
-			GRID_AT(grid, row, col) = ' ';
+			GRID_AT(grid, row, col) = EMPTY;
 
 			maxEval = fmax(maxEval, eval);
 			alpha = fmax(alpha, eval);
@@ -60,7 +60,7 @@ static int minimax(t_grid *grid, int depth, int alpha, int beta, int maximizingP
 
 			int eval = minimax(grid, depth - 1, alpha, beta, 1, width, height);
 
-			GRID_AT(grid, row, col) = ' ';
+			GRID_AT(grid, row, col) = EMPTY;
 
 			minEval = fmin(minEval, eval);
 			beta = fmin(beta, eval);
@@ -71,11 +71,12 @@ static int minimax(t_grid *grid, int depth, int alpha, int beta, int maximizingP
 		return minEval;
 	}
 }
+		#include <stdio.h>
 
 int find_best_move(t_grid *grid, int width, int height, int depth)
 {
 	int bestMove = -1;
-	int maxEval = -MAX;
+	float maxEval = -INFINITY;
 
 	for (int col = 0 ; col < width ; col++)
 	{
@@ -84,9 +85,11 @@ int find_best_move(t_grid *grid, int width, int height, int depth)
 		int row = get_available_row(grid, col);
 		GRID_AT(grid, row, col) = BOT;
 
-		int eval = minimax(grid, depth - 1, -MAX, MAX, 0, width, height);
+		float eval = minimax(grid, depth - 1, -MAX, MAX, 0, width, height);
 
-		GRID_AT(grid, row, col) = ' ';
+		GRID_AT(grid, row, col) = EMPTY;
+
+		printf("%f %f", eval, maxEval);
 
 		if (eval > maxEval)
 		{

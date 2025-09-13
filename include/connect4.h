@@ -28,7 +28,7 @@ int 	read_valid_column(int columns, int *grid_heights, int grid_height);
 
 // ------ MINIMAX ------ //
 
-int evaluate_board(t_grid *grid);
+float evaluate_board(t_grid *grid);
 int find_best_move(t_grid *grid, int width, int height, int depth);
 
 #endif

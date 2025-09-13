@@ -32,7 +32,8 @@ int game_loop(t_game *game)
 		}
 		else
 		{
-			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, 5); 
+			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, 1);
+			ft_printf("%d\n", ai_move);
 			place_jeton(&game->grid, ai_move, BOT);
 
 			// if (check_winner(game->grid, game->grid.width, game->grid.height, BOT))

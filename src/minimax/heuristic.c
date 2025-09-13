@@ -2,7 +2,7 @@
 #include <math.h>
 #include "connect4.h"
 
-static int score_window(int countIA, int countADV /*int countEmpty*/)
+static float score_window(int countIA, int countADV /*int countEmpty*/)
 {
 	if (countIA > 0 && countADV > 0) return 0;
 	if (countIA == N_ALIGN) return INFINITY;    // victoire IA
@@ -12,9 +12,9 @@ static int score_window(int countIA, int countADV /*int countEmpty*/)
 	return 0;
 }
 
-int evaluate_board(t_grid *grid)
+float evaluate_board(t_grid *grid)
 {
-	int score = 0;
+	float score = 0;
 
 	// Horizontales
 	for (unsigned int y = 0; y < grid->height; y++)
