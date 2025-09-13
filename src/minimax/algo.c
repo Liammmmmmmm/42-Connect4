@@ -57,7 +57,7 @@ static float minimax(t_grid *grid, int depth, float alpha, float beta, int maxim
 	
 			int row = grid->level[col];
 			grid->level[col]++;
-			GRID_AT(grid, col, row) = PLAYER;
+			GRID_AT(grid, col, row) = PLAYER_THINKING;
 			
 			if (evaluate_board(grid) == INFINITY)
 			{
@@ -88,7 +88,7 @@ static float minimax(t_grid *grid, int depth, float alpha, float beta, int maxim
 	
 			int row = grid->level[col];
 			grid->level[col]++;
-			GRID_AT(grid, col, row) = BOT;
+			GRID_AT(grid, col, row) = BOT_THINKING;
 	
 			if (evaluate_board(grid) == -INFINITY)
 			{
@@ -116,26 +116,30 @@ int find_best_move(t_grid *grid, int width, int height, int depth)
 	int bestMove = -1;
 	float maxEval = -INFINITY;
 
-	for (int col = 0 ; col < width ; col++)
+	while (bestMove == -1)
 	{
-		if (is_column_full(grid, col)) continue;
-		
-		int row = grid->level[col];
-		grid->level[col]++;
-		GRID_AT(grid, col, row) = BOT;
-		float eval = minimax(grid, depth - 1, -INFINITY, INFINITY, 1, width, height);
-		grid->level[col]--;
-		GRID_AT(grid, col, row) = EMPTY;
-		printf("Col %d: eval %f\n",col, eval);
-		
-		if (eval > maxEval)
+		for (int col = 0 ; col < width ; col++)
 		{
-			maxEval = eval;
-			bestMove = col;
+			if (is_column_full(grid, col)) continue;
+			
+			int row = grid->level[col];
+			grid->level[col]++;
+			GRID_AT(grid, col, row) = BOT_THINKING;
+			float eval = minimax(grid, depth - 1, -INFINITY, INFINITY, 1, width, height);
+			grid->level[col]--;
+			GRID_AT(grid, col, row) = EMPTY;
+			printf("Col %d: eval %f\n",col, eval);
+			
+			if (eval > maxEval)
+			{
+				maxEval = eval;
+				bestMove = col;
+			}
 		}
+		depth--;
+		if (depth == 0)
+			break ;
 	}
-
-	// Ajouter une secu : si -1 prendre du random jsuqu'a tomber sur une col vide
 
 	return bestMove;
 }

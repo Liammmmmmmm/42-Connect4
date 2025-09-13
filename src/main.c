@@ -8,6 +8,8 @@
 
 void	place_jeton(t_grid *grid, int x, char player)
 {
+	if (x < 0 || x >= (int)grid->width)
+		return ;
 	grid->data[grid->level[x] * grid->width + x] = player;
 	grid->level[x]++;
 }
@@ -30,15 +32,15 @@ int game_loop(t_game *game)
 {
 	while (!game->state)
 	{
-		display_grid(game);
+		display_grid(&game->grid);
 		if (game->player_turn == PLAYER)
 		{
-			int player_move = read_valid_column(game->grid.width, game->grid.level, game->grid.height);
+			int player_move = read_valid_column(game->grid.width, game->grid.level, game->grid.height) - 1;
 			place_jeton(&game->grid, player_move, PLAYER);
 
 			if (evaluate_board(&game->grid) == -INFINITY)
 			{
-				display_grid(game);
+				display_grid(&game->grid);
 				ft_printf("Player wins!\n");
 				game->state = 1;
 				return 0;
@@ -46,12 +48,12 @@ int game_loop(t_game *game)
 		}
 		else
 		{
-			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, 4);
+			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, 8);
 			place_jeton(&game->grid, ai_move, BOT);
 
 			if (evaluate_board(&game->grid) == INFINITY)
 			{
-				display_grid(game);
+				display_grid(&game->grid);
 				ft_printf("AI wins!\n");
 				game->state = 1;
 				return 0;
@@ -66,7 +68,7 @@ int game_loop(t_game *game)
 		}
 		if (is_draw)
 		{
-		    display_grid(game);
+		    display_grid(&game->grid);
 			ft_printf("It's a draw!\n");
 			game->state = 1;
 			return 0;

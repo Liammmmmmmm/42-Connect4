@@ -22,7 +22,7 @@ int read_valid_column(int columns, int *grid_heights, int grid_height)
 
 	while (1)
 	{
-		ft_printf("Choose a column (0 to %d): ", columns - 1);
+		ft_printf("Choose a column (1 to %d): ", columns);
 
 		buffer = get_next_line(0);
 
@@ -45,13 +45,13 @@ int read_valid_column(int columns, int *grid_heights, int grid_height)
 		col = ft_atoi(buffer);
 		free(buffer);
 
-		if (col < 0 || col >= columns)
+		if (col <= 0 || col > columns)
 		{
 			ft_printf("Invalid column: out of bounds.\n");
 			continue;
 		}
 
-		if (grid_heights[col] >= grid_height)
+		if (grid_heights[col - 1] >= grid_height)
 		{
 			ft_printf("Column full. Choose another one.\n");
 			continue;
