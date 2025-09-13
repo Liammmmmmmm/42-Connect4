@@ -25,8 +25,8 @@ float evaluate_board(t_grid *grid)
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)
 			{
-				if (GRID_AT(grid, x+k, y) == BOT) countIA++;
-				else if (GRID_AT(grid, x+k, y) == PLAYER) countADV++;
+				if (GRID_AT(grid, x+k, y)  < 0) countIA++;
+				else if (GRID_AT(grid, x+k, y) > 0) countADV++;
 				else countEmpty++;
 			}
 			score += score_window(countIA, countADV /*countEmpty*/);
@@ -41,8 +41,8 @@ float evaluate_board(t_grid *grid)
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)
 			{
-				if (GRID_AT(grid, x, y+k) == BOT) countIA++;
-				else if (GRID_AT(grid, x, y+k) == PLAYER) countADV++;
+				if (GRID_AT(grid, x, y+k) < 0) countIA++;
+				else if (GRID_AT(grid, x, y+k) > 0) countADV++;
 				else countEmpty++;
 			}
 			score += score_window(countIA, countADV /*countEmpty*/);
@@ -57,8 +57,8 @@ float evaluate_board(t_grid *grid)
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)
 			{
-				if (GRID_AT(grid, x+k, y+k) == BOT) countIA++;
-				else if (GRID_AT(grid, x+k, y+k) == PLAYER) countADV++;
+				if (GRID_AT(grid, x+k, y+k) < 0) countIA++;
+				else if (GRID_AT(grid, x+k, y+k) > 0) countADV++;
 				else countEmpty++;
 			}
 			score += score_window(countIA, countADV /*countEmpty*/);
@@ -73,8 +73,8 @@ float evaluate_board(t_grid *grid)
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)
 			{
-				if (GRID_AT(grid, x-k, y+k) == BOT) countIA++;
-				else if (GRID_AT(grid, x-k, y+k) == PLAYER) countADV++;
+				if (GRID_AT(grid, x-k, y+k) < 0) countIA++;
+				else if (GRID_AT(grid, x-k, y+k) > 0) countADV++;
 				else countEmpty++;
 			}
 			score += score_window(countIA, countADV /*countEmpty*/);
