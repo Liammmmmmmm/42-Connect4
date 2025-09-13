@@ -27,6 +27,6 @@ void	destroy_game(t_game *game);
 
 // ------ MINIMAX ------ //
 
-int evaluate_board(t_grid grid, int width, int height);
+int evaluate_board(test_grid grid, int width, int height);
 
 #endif
