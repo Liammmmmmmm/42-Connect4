@@ -37,7 +37,6 @@ int	is_num_only(char *str)
 	}
 	return (1);
 }
-
 int	main(int ac, char **av)
 {
 	t_game	game;

@@ -6,12 +6,12 @@
 
 #define MAX 100
 
-int is_column_full(t_grid grid, int col)
+static int is_column_full(t_grid grid, int col)
 {
 	return GRID_AT(&grid, 0, col) != ' ';
 }
 
-int get_available_row(t_grid grid, int col)
+static int get_available_row(t_grid grid, int col)
 {
 	for (int row = grid.height - 1; row >= 0; row--)
 	{
@@ -21,7 +21,7 @@ int get_available_row(t_grid grid, int col)
 	return -1;
 }
 
-int minimax(t_grid grid, int depth, int alpha, int beta, int maximizingPlayer, int width, int height)
+static int minimax(t_grid grid, int depth, int alpha, int beta, int maximizingPlayer, int width, int height)
 {
 	if (depth == 0 || game_over(grid, width, height))
 		return evaluate_board(grid, width, height);

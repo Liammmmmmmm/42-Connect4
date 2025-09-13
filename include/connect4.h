@@ -28,5 +28,7 @@ void	destroy_game(t_game *game);
 // ------ MINIMAX ------ //
 
 int evaluate_board(t_grid grid, int width, int height);
+int find_best_move(t_grid grid, int width, int height, int depth);
+int game_over(t_grid grid, int width, int height);
 
 #endif
