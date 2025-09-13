@@ -24,6 +24,7 @@ void	display_grid(t_game *game);
 
 void	destroy_game(t_game *game);
 
+int 	read_valid_column(int columns, int *grid_heights, int grid_height);
 
 // ------ MINIMAX ------ //
 

@@ -6,6 +6,7 @@ INCLUDE_DIR = include
 FILES =	$(addprefix $(SRC_DIR)/, \
 	main.c \
 	put_usage.c \
+	game_loop.c \
 	init/init_game.c \
 	display/display_grid.c \
 	destroy/destroy_game.c \

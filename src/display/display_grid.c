@@ -30,11 +30,11 @@ static inline void	display_line(t_grid *grid, unsigned int yi)
 		ft_printf("┃ 🔴 ");
 	else
 		ft_printf("┃ 🔵 "); // 🟢
-	for (unsigned int xi = 0; xi < grid->width; xi++)
+	for (unsigned int xi = 0; xi < grid->width - 1; xi++)
 	{
-		if (!GRID_AT(grid, 0, yi))
+		if (!GRID_AT(grid, xi + 1, yi))
 			ft_printf("│    ");
-		else if (GRID_AT(grid, 0, yi) < 0)
+		else if (GRID_AT(grid, xi + 1, yi) < 0)
 			ft_printf("│ 🔴 ");
 		else
 			ft_printf("│ 🔵 ");
@@ -54,8 +54,8 @@ void	display_grid(t_game *game)
 {
 	for (unsigned int yi = 0; yi < game->grid.height; yi++)
 	{
-		display_delimitation(yi, game->grid.width);
+		display_delimitation(yi, game->grid.width - 1);
 		display_line(&game->grid, yi);
 	}
-	display_endline(game->grid.width);
+	display_endline(game->grid.width - 1);
 }

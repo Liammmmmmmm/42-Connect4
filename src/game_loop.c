@@ -8,12 +8,14 @@ int is_numeric(const char *str)
     if (*str == '\0') return 0;
 
     for (int i = 0; str[i]; i++)
+	{
         if (!ft_isdigit(str[i])) return 0;
+	}
 
 	return 1;
 }
 
-int read_valid_column(int columns, int *grid_heights)
+int read_valid_column(int columns, int *grid_heights, int grid_height)
 {
 	char *buffer = NULL;
 	int col;
@@ -49,7 +51,7 @@ int read_valid_column(int columns, int *grid_heights)
 			continue;
 		}
 
-		if (grid_heights[col] < 1)
+		if (grid_heights[col] >= grid_height)
 		{
 			ft_printf("Column full. Choose another one.\n");
 			continue;
@@ -57,21 +59,4 @@ int read_valid_column(int columns, int *grid_heights)
 
 		return col;
 	}
-}
-
-// TEST
-
-void test_read_valid_column()
-{
-	int columns = 8;
-	int grid_heights[] = {0, 2, 0, 4, 1, 8, 6, 5};
-
-	int selected_column = read_valid_column(columns, grid_heights);
-	ft_printf("You selected column: %d\n", selected_column);
-
-}
-
-int main() {
-	test_read_valid_column();
-	return 0;
 }

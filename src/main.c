@@ -5,14 +5,23 @@
 #include <time.h>
 #include <unistd.h>
 
+void	place_jeton(t_grid *grid, int x, char player)
+{
+	grid->data[grid->level[x] * grid->width + x] = player;
+	grid->level[x]++;
+}
+
 int	game_loop(t_game *game)
 {
-	char	buffer[MEMORY_SIZE];
-
 	while (!game->state)
 	{
-		// if (game->player_turn == PLAYER)
-		read(STDIN_FILENO, buffer, MEMORY_SIZE);
+		if (game->player_turn == PLAYER)
+		{
+
+			int player_move = read_valid_column(game->grid.width, game->grid.level, game->grid.height);
+			
+			place_jeton(&game->grid, player_move, PLAYER);
+		}
 		display_grid(game);
 		//     prompt_to_play
 		// else
