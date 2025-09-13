@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <math.h>
 
 void	place_jeton(t_grid *grid, int x, char player)
 {
@@ -35,35 +36,41 @@ int game_loop(t_game *game)
 			int player_move = read_valid_column(game->grid.width, game->grid.level, game->grid.height);
 			place_jeton(&game->grid, player_move, PLAYER);
 
-			// if (check_winner(game->grid, game->grid.width, game->grid.height, PLAYER))
-			// {
-			//     display_grid(game);
-			//     ft_printf("Player wins!\n");
-			//     game->state = 1;
-			//     return 0;
-			// }
+			if (evaluate_board(&game->grid) == -INFINITY)
+			{
+				display_grid(game);
+				ft_printf("Player wins!\n");
+				game->state = 1;
+				return 0;
+			}
 		}
 		else
 		{
-			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, 6);
+			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, 4);
 			place_jeton(&game->grid, ai_move, BOT);
 
-			// if (check_winner(game->grid, game->grid.width, game->grid.height, BOT))
-			// {
-			//     display_grid(game);
-			//     ft_printf("AI wins!\n");
-			//     game->state = 1;
-			//     return 0;
-			// }
+			if (evaluate_board(&game->grid) == INFINITY)
+			{
+				display_grid(game);
+				ft_printf("AI wins!\n");
+				game->state = 1;
+				return 0;
+			}
 		}
 
-		// if (is_draw(game->grid, game->grid.width, game->grid.height))
-		// {
-		//     display_grid(game);
-		//     ft_printf("It's a draw!\n");
-		//     game->state = 1;
-		//     return 0;
-		// }
+		int is_draw = 1;
+		for (unsigned int i = 0; i < game->grid.width; i++)
+		{
+			if (game->grid.level[i] != (int)game->grid.height)
+				is_draw = 0;
+		}
+		if (is_draw)
+		{
+		    display_grid(game);
+			ft_printf("It's a draw!\n");
+			game->state = 1;
+			return 0;
+		}
 
 		if (game->player_turn == PLAYER)
 			game->player_turn = BOT;
@@ -89,6 +96,9 @@ int	is_num_only(char *str)
 	}
 	return (1);
 }
+
+t_game	*g_game;
+
 int	main(int ac, char **av)
 {
 	t_game	game;
@@ -96,6 +106,7 @@ int	main(int ac, char **av)
 	int		grid_width;
 	int		grid_height;
 
+	g_game = &game;
 	if (ac != 3)
 	{
 		put_usage(av[0]);

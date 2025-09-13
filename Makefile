@@ -29,9 +29,9 @@ CFLAGS = -Wall -Wextra -Werror -MD -MP -g3 $(INCLUDE_FLAGS)
 
 MAKEFLAGS = --no-print-directory
 
-.PHONY: all clean fclean re $(LIBFT)
+.PHONY: all clean fclean re make_libft
 
-all:	$(NAME)
+all:	make_libft $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -l$(LIBFT_NAME) -lm
@@ -40,8 +40,10 @@ $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBFT):
+make_libft:
 	$(MAKE) -C $(LIBFT_DIR)
+
+$(LIBFT): make_libft
 
 clean:
 	rm -rf $(BUILD_DIR)
