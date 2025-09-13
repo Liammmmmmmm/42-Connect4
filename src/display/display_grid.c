@@ -55,7 +55,7 @@ void	display_grid(t_game *game)
 	for (unsigned int yi = 0; yi < game->grid.height; yi++)
 	{
 		display_delimitation(yi, game->grid.width - 1);
-		display_line(&game->grid, game->grid.width - yi - 2);
+		display_line(&game->grid, game->grid.height - yi - 1);
 	}
 	display_endline(game->grid.width - 1);
 }
