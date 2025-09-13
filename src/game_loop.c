@@ -8,7 +8,10 @@ int is_numeric(const char *str)
     if (*str == '\0') return 0;
 
     for (int i = 0; str[i]; i++)
-        if (!ft_isdigit(str[i])) return 0;
+	{
+        if (!ft_isdigit(str[i]))
+			return 0;
+	}
 
 	return 1;
 }

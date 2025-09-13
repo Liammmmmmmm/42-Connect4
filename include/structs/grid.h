@@ -8,4 +8,11 @@ typedef struct s_grid
 	char			*data;
 }			t_grid;
 
+typedef struct
+{
+    char **grid;
+    int width;
+    int height;
+} test_grid;
+
 #endif

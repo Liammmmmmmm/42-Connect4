@@ -6,8 +6,11 @@ INCLUDE_DIR = include
 FILES =	$(addprefix $(SRC_DIR)/, \
 	main.c \
 	put_usage.c \
+	game_loop.c \
 	init/init_game.c \
 	destroy/destroy_game.c \
+	minimax/minimax.c \
+	minimax/heuristic.c \
 )
 
 OBJS = $(addprefix $(BUILD_DIR)/, $(FILES:.c=.o))
