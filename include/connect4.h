@@ -11,13 +11,15 @@
 
 # define N_ALIGN 4
 
-# define GRID_AT(g, x, y) (g->data[y * g->width + x])
+# define GRID_AT(g, x, y) ((g)->data[(y) * (g)->width + (x)])
 
 # define EMPTY 0
 # define PLAYER 1
 # define BOT -1
 # define PLAYER_THINKING 2
 # define BOT_THINKING -2
+
+# define COOLNESS 0
 
 extern t_game *g_game;
 

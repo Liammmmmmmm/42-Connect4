@@ -106,28 +106,32 @@ int find_best_move(t_grid *grid, int width, int height, int depth)
 	int bestMove = -1;
 	float maxEval = -INFINITY;
 
-	for (int col = 0 ; col < width ; col++)
+	while (bestMove == -1)
 	{
-		if (is_column_full(grid, col)) continue;
-		
-		int row = grid->level[col];
-		// print_levels(grid);
-		grid->level[col]++;
-		GRID_AT(grid, col, row) = BOT_THINKING;
-		float eval = minimax(grid, depth - 1, -INFINITY, INFINITY, 1, width, height);
-		grid->level[col]--;
-		GRID_AT(grid, col, row) = EMPTY;
-		// print_levels(grid);
-		printf("Col %d: eval %f\n",col, eval);
-		
-		if (eval > maxEval)
+		for (int col = 0 ; col < width ; col++)
 		{
-			maxEval = eval;
-			bestMove = col;
+			if (is_column_full(grid, col)) continue;
+			
+			int row = grid->level[col];
+			// print_levels(grid);
+			grid->level[col]++;
+			GRID_AT(grid, col, row) = BOT_THINKING;
+			float eval = minimax(grid, depth - 1, -INFINITY, INFINITY, 1, width, height);
+			grid->level[col]--;
+			GRID_AT(grid, col, row) = EMPTY;
+			// print_levels(grid);
+			printf("Col %d: eval %f\n",col, eval);
+			
+			if (eval > maxEval)
+			{
+				maxEval = eval;
+				bestMove = col;
+			}
 		}
+		depth--;
+		if (depth == 0)
+			break ;
 	}
-
-	// Ajouter une secu : si -1 prendre du random jsuqu'a tomber sur une col vide
 
 	return bestMove;
 }

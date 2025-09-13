@@ -21,12 +21,12 @@ static float score_window(int countIA, int countADV /*int countEmpty*/)
 	if (countADV > 0) ret += -10 * (int)pow(10, countADV - 1);
 	return ret;
 }
-
+#include <stdio.h>
 float evaluate_board(t_grid *grid)
 {
 	float score = 0;
 
-	# ifndef COOLNESS
+	# if COOLNESS
 	usleep(10000);
 	display_grid(grid);
 	# endif
@@ -57,7 +57,9 @@ float evaluate_board(t_grid *grid)
 				if (GRID_AT(grid, x, y+k) < 0) countIA++;
 				else if (GRID_AT(grid, x, y+k) > 0) countADV++;
 				else countEmpty++;
+				// ft_printf("%u %u -> %d\n", x, y+k, GRID_AT(grid, x, y+k));
 			}
+			// printf("%u %u: %d %d\n", x, y, countADV, countIA);
 			score += score_window(countIA, countADV /*countEmpty*/);
 		}
 	}

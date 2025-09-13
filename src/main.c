@@ -8,6 +8,8 @@
 
 void	place_jeton(t_grid *grid, int x, char player)
 {
+	if (x < 0 || x >= (int)grid->width)
+		return ;
 	grid->data[grid->level[x] * grid->width + x] = player;
 	grid->level[x]++;
 }
@@ -33,7 +35,7 @@ int game_loop(t_game *game)
 		display_grid(&game->grid);
 		if (game->player_turn == PLAYER)
 		{
-			int player_move = read_valid_column(game->grid.width, game->grid.level, game->grid.height);
+			int player_move = read_valid_column(game->grid.width, game->grid.level, game->grid.height) - 1;
 			place_jeton(&game->grid, player_move, PLAYER);
 
 			if (evaluate_board(&game->grid) == -INFINITY)
@@ -46,7 +48,7 @@ int game_loop(t_game *game)
 		}
 		else
 		{
-			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, 10);
+			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, 8);
 			place_jeton(&game->grid, ai_move, BOT);
 
 			if (evaluate_board(&game->grid) == INFINITY)
