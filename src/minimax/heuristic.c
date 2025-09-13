@@ -1,15 +1,23 @@
 
 #include <math.h>
 #include "connect4.h"
+#include "libft.h"
 
 static float score_window(int countIA, int countADV /*int countEmpty*/)
 {
-	if (countIA > 0 && countADV > 0) return 0;
-	if (countIA == N_ALIGN) return INFINITY;    // victoire IA
-	if (countADV == N_ALIGN) return -INFINITY;  // victoire ADV
+	if (countIA == N_ALIGN) {
+		// ft_printf("countIA : %d\n", countIA);
+		// display_grid(g_game);
+		return INFINITY;
+	}    // victoire IA
+	if (countADV == N_ALIGN) {
+		// ft_printf("countADV : %d\n", countADV);
+		// display_grid(g_game);
+		return -INFINITY;
+	}  // victoire ADV
 	float ret = 0;
 	if (countIA > 0) ret += 10 * (int)pow(10, countIA - 1);
-	if (countADV > 0) ret += -11 * (int)pow(10, countADV - 1);
+	if (countADV > 0) ret += -10 * (int)pow(10, countADV - 1);
 	return ret;
 }
 

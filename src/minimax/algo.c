@@ -34,55 +34,55 @@ void print_levels(t_grid *grid)
 
 static float minimax(t_grid *grid, int depth, float alpha, float beta, int maximizingPlayer, int width, int height)
 {
-	if (depth == 0)
+	if (depth == 0 || alpha == INFINITY || beta == -INFINITY)
 		return evaluate_board(grid);
 
 	if (maximizingPlayer)
-	{
-		float maxEval = -INFINITY;
-		for (int col = 0 ; col < width ; col++)
-		{
-			if (is_column_full(grid, col)) continue;
-
-			int row = grid->level[col];
-			grid->level[col]++;
-			GRID_AT(grid, col, row) = BOT;
-
-			float eval = minimax(grid, depth - 1, alpha, beta, 0, width, height);
-
-			grid->level[col]--;
-			GRID_AT(grid, col, row) = EMPTY;
-			maxEval = fmax(maxEval, eval);
-			alpha = fmax(alpha, eval);
-
-			if (beta <= alpha)
-				break;
-		}
-		return maxEval;
-	}
-	else
 	{
 		float minEval = INFINITY;
 		for (int col = 0 ; col < width ; col++)
 		{
 			if (is_column_full(grid, col)) continue;
-
+	
 			int row = grid->level[col];
 			grid->level[col]++;
 			GRID_AT(grid, col, row) = PLAYER;
-
-			float eval = minimax(grid, depth - 1, alpha, beta, 1, width, height);
-
+	
+			float eval = minimax(grid, depth - 1, alpha, beta, 0, width, height);
+	
 			grid->level[col]--;
 			GRID_AT(grid, col, row) = EMPTY;
-
+	
 			minEval = fmin(minEval, eval);
 			beta = fmin(beta, eval);
-
+	
 			if (beta <= alpha)
 				break;
 		}
 		return minEval;
+	}
+	else
+	{
+		float maxEval = -INFINITY;
+		for (int col = 0 ; col < width ; col++)
+		{
+			if (is_column_full(grid, col)) continue;
+	
+			int row = grid->level[col];
+			grid->level[col]++;
+			GRID_AT(grid, col, row) = BOT;
+	
+			float eval = minimax(grid, depth - 1, alpha, beta, 1, width, height);
+	
+			grid->level[col]--;
+			GRID_AT(grid, col, row) = EMPTY;
+			maxEval = fmax(maxEval, eval);
+			alpha = fmax(alpha, eval);
+	
+			if (beta <= alpha)
+				break;
+		}
+		return maxEval;
 	}
 }
 		#include <stdio.h>
@@ -100,11 +100,11 @@ int find_best_move(t_grid *grid, int width, int height, int depth)
 		// print_levels(grid);
 		grid->level[col]++;
 		GRID_AT(grid, col, row) = BOT;
-		float eval = minimax(grid, depth - 1, -INFINITY, INFINITY, 0, width, height);
+		float eval = minimax(grid, depth - 1, -INFINITY, INFINITY, 1, width, height);
 		grid->level[col]--;
 		GRID_AT(grid, col, row) = EMPTY;
 		// print_levels(grid);
-		// printf("%f %f\n", eval, maxEval);
+		printf("Col %d: eval %f\n",col, eval);
 		
 		if (eval > maxEval)
 		{

@@ -3,6 +3,7 @@
 
 # include "structs/game.h"
 
+
 # define GRID_WIDTH_MIN 7
 # define GRID_HEIGHT_MIN 6
 # define GRID_WIDTH_MAX 100
@@ -15,6 +16,8 @@
 # define EMPTY 0
 # define PLAYER 1
 # define BOT -1
+
+extern t_game *g_game;
 
 int		init_game(t_game *game, int g_width, int g_height);
 
