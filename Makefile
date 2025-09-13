@@ -7,6 +7,7 @@ FILES =	$(addprefix $(SRC_DIR)/, \
 	main.c \
 	put_usage.c \
 	init/init_game.c \
+	display/display_grid.c \
 	destroy/destroy_game.c \
 )
 
@@ -21,7 +22,7 @@ LIBFT_NAME = ft
 
 INCLUDE_FLAGS = $(addprefix -I, $(INCLUDE_DIR) $(LIBFT_INCLUDE_DIR))
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -MD -MP $(INCLUDE_FLAGS)
+CFLAGS = -Wall -Wextra -Werror -g3 -MD -MP $(INCLUDE_FLAGS)
 
 MAKEFLAGS = --no-print-directory
 

@@ -11,6 +11,6 @@ int	init_game(t_game *game, int g_width, int g_height)
 	if (!game->grid.data)
 		return (1);
 	game->grid.width = g_width;
-	game->grid.width = g_height;
+	game->grid.height = g_height;
 	return (0);
 }
