@@ -47,7 +47,14 @@ static float minimax(t_grid *grid, int depth, float alpha, float beta, int maxim
 			int row = grid->level[col];
 			grid->level[col]++;
 			GRID_AT(grid, col, row) = PLAYER;
-	
+			
+			if (evaluate_board(grid) == INFINITY)
+			{
+				grid->level[col]--;
+				GRID_AT(grid, col, row) = EMPTY;
+				return INFINITY;
+			}
+
 			float eval = minimax(grid, depth - 1, alpha, beta, 0, width, height);
 	
 			grid->level[col]--;
@@ -71,6 +78,13 @@ static float minimax(t_grid *grid, int depth, float alpha, float beta, int maxim
 			int row = grid->level[col];
 			grid->level[col]++;
 			GRID_AT(grid, col, row) = BOT;
+	
+			if (evaluate_board(grid) == -INFINITY)
+			{
+				grid->level[col]--;
+				GRID_AT(grid, col, row) = EMPTY;
+				return -INFINITY;
+			}
 	
 			float eval = minimax(grid, depth - 1, alpha, beta, 1, width, height);
 	
