@@ -9,64 +9,64 @@ static inline void	display_delimitation(unsigned int yi, unsigned int width)
 {
 	if (yi == 0)
 	{
-		printf("┏━━━━");
+		ft_printf("┏━━━━");
 		for (unsigned int xi = 0; xi < width; xi++)
-			printf("┯━━━━");
-		printf("┓\n");
+			ft_printf("┯━━━━");
+		ft_printf("┓\n");
 	}
 	else
 	{
-		printf("┠    ");
+		ft_printf("┠    ");
 		for (unsigned int xi = 0; xi < width; xi++)
-			printf("┼    ");
-		printf("┨\n");
+			ft_printf("┼    ");
+		ft_printf("┨\n");
 	}
 }
 
 static inline void	display_line(t_grid *grid, unsigned int yi)
 {
 	if (!GRID_AT(grid, 0, yi))
-		printf("┃    ");
+		ft_printf("┃    ");
 	else if (GRID_AT(grid, 0, yi) == BOT)
-		printf("┃ 🔴 ");
+		ft_printf("┃ 🔴 ");
 	else if (GRID_AT(grid, 0, yi) == PLAYER)
-		printf("┃ 🔵 "); // 🟢
+		ft_printf("┃ 🔵 "); // 🟢
 	else if (GRID_AT(grid, 0, yi) == BOT_THINKING)
-		printf("┃ 🟠 ");
+		ft_printf("┃ 🟠 ");
 	else if (GRID_AT(grid, 0, yi) == PLAYER_THINKING)
-		printf("┃ 🟣 ");
+		ft_printf("┃ 🟣 ");
 	else
-		printf("┃ ⚠️ ");
+		ft_printf("┃ ⚠️ ");
 	for (unsigned int xi = 0; xi < grid->width - 1; xi++)
 	{
 		if (!GRID_AT(grid, xi + 1, yi))
-			printf("│    ");
+			ft_printf("│    ");
 		else if (GRID_AT(grid, xi + 1, yi) == BOT)
-			printf("│ 🔴 ");
+			ft_printf("│ 🔴 ");
 		else if (GRID_AT(grid, xi + 1, yi) == PLAYER)
-			printf("│ 🔵 ");
+			ft_printf("│ 🔵 ");
 		else if (GRID_AT(grid, xi + 1, yi) == BOT_THINKING)
-			printf("│ 🟠 ");
+			ft_printf("│ 🟠 ");
 		else if (GRID_AT(grid, xi + 1, yi) == PLAYER_THINKING)
-			printf("│ 🟣 ");
+			ft_printf("│ 🟣 ");
 		else 
-			printf("│ ⚠️ ");
+			ft_printf("│ ⚠️ ");
 	}
-	printf("┃\n");
+	ft_printf("┃\n");
 }
 
 static inline void	display_endline(unsigned int width)
 {
-	printf("┗━━━━");
+	ft_printf("┗━━━━");
 	for (unsigned int xi = 0; xi < width; xi++)
-		printf("┷━━━━");
-	printf("┛\n");
-	printf("  1    2    3    4    5    6    7\n");
+		ft_printf("┷━━━━");
+	ft_printf("┛\n");
+	ft_printf("  1    2    3    4    5    6    7\n");
 }
 
 void	display_grid(t_grid *grid)
 {
-	printf("\033[2J\033[H");
+	ft_printf("\033[2J\033[H");
 	for (unsigned int yi = 0; yi < grid->height; yi++)
 	{
 		display_delimitation(yi, grid->width - 1);

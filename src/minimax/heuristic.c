@@ -4,21 +4,36 @@
 #include "connect4.h"
 #include "libft.h"
 
+int	ft_iterative_power(int nb, int power)
+{
+	int	i;
+	int	result;
+
+	if (nb == 0 && power == 0)
+		return (1);
+	if (power < 0)
+		return (0);
+	i = 0;
+	result = 1;
+	while (i < power)
+	{
+		result = result * nb;
+		i++;
+	}
+	return (result);
+}
+
 static float score_window(int countIA, int countADV /*int countEmpty*/)
 {
 	if (countIA == N_ALIGN) {
-		// ft_printf("countIA : %d\n", countIA);
-		// display_grid(g_game);
 		return INFINITY;
 	}    // victoire IA
 	if (countADV == N_ALIGN) {
-		// ft_printf("countADV : %d\n", countADV);
-		// display_grid(g_game);
 		return -INFINITY;
 	}  // victoire ADV
 	float ret = 0;
-	if (countIA > 0) ret += 10 * (int)pow(10, countIA - 1);
-	if (countADV > 0) ret += -10 * (int)pow(10, countADV - 1);
+	if (countIA > 0) ret += 10 * (int)ft_iterative_power(10, countIA - 1);
+	if (countADV > 0) ret += -10 * (int)ft_iterative_power(10, countADV - 1);
 	return ret;
 }
 #include <stdio.h>
@@ -59,7 +74,6 @@ float evaluate_board(t_grid *grid)
 				else countEmpty++;
 				// ft_printf("%u %u -> %d\n", x, y+k, GRID_AT(grid, x, y+k));
 			}
-			// printf("%u %u: %d %d\n", x, y, countADV, countIA);
 			score += score_window(countIA, countADV /*countEmpty*/);
 		}
 	}

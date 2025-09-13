@@ -30,6 +30,8 @@ void	place_jeton(t_grid *grid, int x, char player)
 
 int game_loop(t_game *game)
 {
+	int depth = (game->grid.height >= 50 || game->grid.width >= 50) ? 2 : (game->grid.height >= 25 || game->grid.width >= 25) ? 3 : 4;
+
 	while (!game->state)
 	{
 		display_grid(&game->grid);
@@ -48,7 +50,7 @@ int game_loop(t_game *game)
 		}
 		else
 		{
-			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, 8);
+			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, depth);
 			place_jeton(&game->grid, ai_move, BOT);
 
 			if (evaluate_board(&game->grid) == INFINITY)
