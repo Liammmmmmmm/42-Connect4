@@ -25,7 +25,7 @@ static inline void	display_delimitation(unsigned int yi, unsigned int width)
 static inline void	display_line(t_grid *grid, unsigned int yi)
 {
 	if (!GRID_AT(grid, 0, yi))
-		ft_printf("┃   ");
+		ft_printf("┃ ⚫ ");
 	else if (GRID_AT(grid, 0, yi) < 0)
 		ft_printf("┃ X ");
 	else

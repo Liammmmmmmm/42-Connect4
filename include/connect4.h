@@ -5,7 +5,7 @@
 
 # define GRID_WIDTH_MIN 7
 # define GRID_HEIGHT_MIN 6
-# define GRID_WIDTH_MAX 1000
+# define GRID_WIDTH_MAX 100
 # define GRID_HEIGHT_MAX 100
 
 # define N_ALIGN 4
@@ -23,5 +23,10 @@ void	put_usage(char *bin_name);
 void	display_grid(t_game *game);
 
 void	destroy_game(t_game *game);
+
+
+// ------ MINIMAX ------ //
+
+int evaluate_board(t_grid grid, int width, int height);
 
 #endif
