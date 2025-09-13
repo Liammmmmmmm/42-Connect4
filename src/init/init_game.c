@@ -3,15 +3,14 @@
 #include "connect4.h"
 #include "libft.h"
 
-int	init_game(t_game *game, char **args)
+int	init_game(t_game *game, int g_width, int g_height)
 {
 	game->state = 0;
 	game->player_turn = rand() % 2 ? PLAYER : BOT;
-	(void)args;
-	game->grid.data = ft_calloc(GRID_WIDTH_MIN * GRID_HEIGHT_MIN, sizeof(char));
+	game->grid.data = ft_calloc(g_width * g_height, sizeof(char));
 	if (!game->grid.data)
 		return (1);
-	game->grid.width = GRID_WIDTH_MIN;
-	game->grid.width = GRID_HEIGHT_MIN;
+	game->grid.width = g_width;
+	game->grid.width = g_height;
 	return (0);
 }
