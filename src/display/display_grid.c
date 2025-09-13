@@ -35,9 +35,9 @@ static inline void	display_line(t_grid *grid, unsigned int yi)
 		if (!GRID_AT(grid, 0, yi))
 			ft_printf("│    ");
 		else if (GRID_AT(grid, 0, yi) < 0)
-			ft_printf("│ X  ");
+			ft_printf("│ 🔴 ");
 		else
-			ft_printf("│ O  ");
+			ft_printf("│ 🔵 ");
 	}
 	ft_printf("┃\n");
 }

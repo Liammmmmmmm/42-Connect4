@@ -6,6 +6,7 @@ typedef struct s_grid
 	unsigned int	width;
 	unsigned int	height;
 	char			*data;
+	int				*heights;
 }			t_grid;
 
 #endif
