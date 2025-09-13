@@ -12,14 +12,14 @@ int score_window(int countIA, int countADV, int countEmpty)
 	return 0;
 }
 
-int evaluate_board(t_grid grid, int width, int height)
+int evaluate_board(t_grid *grid)
 {
 	int score = 0;
 
 	// Horizontales
-	for (int y = 0; y < height; y++)
+	for (int y = 0; y < grid->height; y++)
 	{
-		for (int x = 0; x <= width - N_ALIGN; x++)
+		for (int x = 0; x <= grid->width - N_ALIGN; x++)
 		{
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)
@@ -33,9 +33,9 @@ int evaluate_board(t_grid grid, int width, int height)
 	}
 
 	// Verticales
-	for (int x = 0; x < width; x++)
+	for (int x = 0; x < grid->width; x++)
 	{
-		for (int y = 0; y <= height - N_ALIGN; y++)
+		for (int y = 0; y <= grid->height - N_ALIGN; y++)
 		{
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)
@@ -49,9 +49,9 @@ int evaluate_board(t_grid grid, int width, int height)
 	}
 
 	// Diagonale ╲
-	for (int y = 0; y <= height - N_ALIGN; y++)
+	for (int y = 0; y <= grid->height - N_ALIGN; y++)
 	{
-		for (int x = 0; x <= width - N_ALIGN; x++)
+		for (int x = 0; x <= grid->width - N_ALIGN; x++)
 		{
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)
@@ -65,9 +65,9 @@ int evaluate_board(t_grid grid, int width, int height)
 	}
 
 	// Diagonale ╱
-	for (int y = 0; y <= height - N_ALIGN; y++)
+	for (int y = 0; y <= grid->height - N_ALIGN; y++)
 	{
-		for (int x = N_ALIGN - 1; x < width; x++)
+		for (int x = N_ALIGN - 1; x < grid->width; x++)
 		{
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)

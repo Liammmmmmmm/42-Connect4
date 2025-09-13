@@ -28,6 +28,6 @@ int 	read_valid_column(int columns, int *grid_heights, int grid_height);
 
 // ------ MINIMAX ------ //
 
-int evaluate_board(test_grid grid, int width, int height);
+int evaluate_board(t_grid *grid);
 
 #endif
