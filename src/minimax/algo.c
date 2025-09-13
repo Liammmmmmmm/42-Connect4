@@ -128,7 +128,10 @@ int find_best_move(t_grid *grid, int width, int height, int depth)
 			float eval = minimax(grid, depth - 1, -INFINITY, INFINITY, 1, width, height);
 			grid->level[col]--;
 			GRID_AT(grid, col, row) = EMPTY;
-			printf("Col %d: eval %f\n",col, eval);
+			
+			#if LOG_COOL
+			ft_printf("Col %d: eval %f\n",col, eval);
+			#endif
 			
 			if (eval > maxEval)
 			{

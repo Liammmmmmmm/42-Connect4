@@ -20,6 +20,7 @@
 # define BOT_THINKING -2
 
 # define COOLNESS 0
+# define LOG_COOL 0
 
 extern t_game *g_game;
 
