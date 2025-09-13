@@ -1,5 +1,6 @@
 
 #include <math.h>
+#include <unistd.h>
 #include "connect4.h"
 #include "libft.h"
 
@@ -25,6 +26,10 @@ float evaluate_board(t_grid *grid)
 {
 	float score = 0;
 
+	# ifndef COOLNESS
+	usleep(10000);
+	display_grid(grid);
+	# endif
 	// Horizontales
 	for (unsigned int y = 0; y < grid->height; y++)
 	{

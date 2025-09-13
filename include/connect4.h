@@ -16,6 +16,8 @@
 # define EMPTY 0
 # define PLAYER 1
 # define BOT -1
+# define PLAYER_THINKING 2
+# define BOT_THINKING -2
 
 extern t_game *g_game;
 
@@ -23,7 +25,7 @@ int		init_game(t_game *game, int g_width, int g_height);
 
 void	put_usage(char *bin_name);
 
-void	display_grid(t_game *game);
+void	display_grid(t_grid *grid);
 
 void	destroy_game(t_game *game);
 

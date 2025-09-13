@@ -46,7 +46,7 @@ static float minimax(t_grid *grid, int depth, float alpha, float beta, int maxim
 	
 			int row = grid->level[col];
 			grid->level[col]++;
-			GRID_AT(grid, col, row) = PLAYER;
+			GRID_AT(grid, col, row) = PLAYER * 2;
 	
 			float eval = minimax(grid, depth - 1, alpha, beta, 0, width, height);
 	
@@ -70,7 +70,7 @@ static float minimax(t_grid *grid, int depth, float alpha, float beta, int maxim
 	
 			int row = grid->level[col];
 			grid->level[col]++;
-			GRID_AT(grid, col, row) = BOT;
+			GRID_AT(grid, col, row) = BOT * 2;
 	
 			float eval = minimax(grid, depth - 1, alpha, beta, 1, width, height);
 	
@@ -99,7 +99,7 @@ int find_best_move(t_grid *grid, int width, int height, int depth)
 		int row = grid->level[col];
 		// print_levels(grid);
 		grid->level[col]++;
-		GRID_AT(grid, col, row) = BOT;
+		GRID_AT(grid, col, row) = BOT * 2;
 		float eval = minimax(grid, depth - 1, -INFINITY, INFINITY, 1, width, height);
 		grid->level[col]--;
 		GRID_AT(grid, col, row) = EMPTY;
