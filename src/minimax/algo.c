@@ -6,25 +6,25 @@
 
 #define MAX 100
 
-int is_column_full(t_grid grid, int col)
+static int is_column_full(t_grid *grid, int col)
 {
-	return GRID_AT(&grid, 0, col) != ' ';
+	return GRID_AT(grid, 0, col) != ' ';
 }
 
-int get_available_row(t_grid grid, int col)
+static int get_available_row(t_grid *grid, int col)
 {
-	for (int row = grid.height - 1; row >= 0; row--)
+	for (int row = grid->height - 1; row >= 0; row--)
 	{
-		if (GRID_AT(&grid, row, col) == ' ')
+		if (GRID_AT(grid, row, col) == ' ')
 			return row;
 	}
 	return -1;
 }
 
-int minimax(t_grid grid, int depth, int alpha, int beta, int maximizingPlayer, int width, int height)
+static int minimax(t_grid *grid, int depth, int alpha, int beta, int maximizingPlayer, int width, int height)
 {
 	if (depth == 0 || game_over(grid, width, height))
-		return evaluate_board(grid, width, height);
+		return evaluate_board(grid);
 
 	if (maximizingPlayer)
 	{
@@ -34,11 +34,11 @@ int minimax(t_grid grid, int depth, int alpha, int beta, int maximizingPlayer, i
 			if (is_column_full(grid, col)) continue;
 
 			int row = get_available_row(grid, col);
-			GRID_AT(&grid, row, col) = BOT;
+			GRID_AT(grid, row, col) = BOT;
 
 			int eval = minimax(grid, depth - 1, alpha, beta, 0, width, height);
 
-			GRID_AT(&grid, row, col) = ' ';
+			GRID_AT(grid, row, col) = ' ';
 
 			maxEval = fmax(maxEval, eval);
 			alpha = fmax(alpha, eval);
@@ -56,11 +56,11 @@ int minimax(t_grid grid, int depth, int alpha, int beta, int maximizingPlayer, i
 			if (is_column_full(grid, col)) continue;
 
 			int row = get_available_row(grid, col);
-			GRID_AT(&grid, row, col) = PLAYER;
+			GRID_AT(grid, row, col) = PLAYER;
 
 			int eval = minimax(grid, depth - 1, alpha, beta, 1, width, height);
 
-			GRID_AT(&grid, row, col) = ' ';
+			GRID_AT(grid, row, col) = ' ';
 
 			minEval = fmin(minEval, eval);
 			beta = fmin(beta, eval);
@@ -72,7 +72,7 @@ int minimax(t_grid grid, int depth, int alpha, int beta, int maximizingPlayer, i
 	}
 }
 
-int find_best_move(t_grid grid, int width, int height, int depth)
+int find_best_move(t_grid *grid, int width, int height, int depth)
 {
 	int bestMove = -1;
 	int maxEval = -MAX;
@@ -82,11 +82,11 @@ int find_best_move(t_grid grid, int width, int height, int depth)
 		if (is_column_full(grid, col)) continue;
 
 		int row = get_available_row(grid, col);
-		GRID_AT(&grid, row, col) = BOT;
+		GRID_AT(grid, row, col) = BOT;
 
 		int eval = minimax(grid, depth - 1, -MAX, MAX, 0, width, height);
 
-		GRID_AT(&grid, row, col) = ' ';
+		GRID_AT(grid, row, col) = ' ';
 
 		if (eval > maxEval)
 		{
@@ -98,7 +98,7 @@ int find_best_move(t_grid grid, int width, int height, int depth)
 	return bestMove;
 }
 
-int game_over(t_grid grid, int width, int height)
+int game_over(t_grid *grid, int width, int height)
 {
 	return 0;
 }
