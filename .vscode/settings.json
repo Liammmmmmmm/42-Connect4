@@ -1,0 +1,6 @@
+{
+	"files.associations": {
+		"connect4.h": "c",
+		"libft.h": "c"
+	}
+}
