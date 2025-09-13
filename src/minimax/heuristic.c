@@ -2,7 +2,7 @@
 #include <math.h>
 #include "connect4.h"
 
-int score_window(int countIA, int countADV, int countEmpty)
+static int score_window(int countIA, int countADV /*int countEmpty*/)
 {
 	if (countIA > 0 && countADV > 0) return 0;
 	if (countIA == N_ALIGN) return INFINITY;    // victoire IA
@@ -17,9 +17,9 @@ int evaluate_board(t_grid *grid)
 	int score = 0;
 
 	// Horizontales
-	for (int y = 0; y < grid->height; y++)
+	for (unsigned int y = 0; y < grid->height; y++)
 	{
-		for (int x = 0; x <= grid->width - N_ALIGN; x++)
+		for (unsigned int x = 0; x <= grid->width - N_ALIGN; x++)
 		{
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)
@@ -28,14 +28,14 @@ int evaluate_board(t_grid *grid)
 				else if (GRID_AT(grid, x+k, y) == PLAYER) countADV++;
 				else countEmpty++;
 			}
-			score += score_window(countIA, countADV, countEmpty);
+			score += score_window(countIA, countADV /*countEmpty*/);
 		}
 	}
 
 	// Verticales
-	for (int x = 0; x < grid->width; x++)
+	for (unsigned int x = 0; x < grid->width; x++)
 	{
-		for (int y = 0; y <= grid->height - N_ALIGN; y++)
+		for (unsigned int y = 0; y <= grid->height - N_ALIGN; y++)
 		{
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)
@@ -44,14 +44,14 @@ int evaluate_board(t_grid *grid)
 				else if (GRID_AT(grid, x, y+k) == PLAYER) countADV++;
 				else countEmpty++;
 			}
-			score += score_window(countIA, countADV, countEmpty);
+			score += score_window(countIA, countADV /*countEmpty*/);
 		}
 	}
 
 	// Diagonale ╲
-	for (int y = 0; y <= grid->height - N_ALIGN; y++)
+	for (unsigned int y = 0; y <= grid->height - N_ALIGN; y++)
 	{
-		for (int x = 0; x <= grid->width - N_ALIGN; x++)
+		for (unsigned int x = 0; x <= grid->width - N_ALIGN; x++)
 		{
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)
@@ -60,14 +60,14 @@ int evaluate_board(t_grid *grid)
 				else if (GRID_AT(grid, x+k, y+k) == PLAYER) countADV++;
 				else countEmpty++;
 			}
-			score += score_window(countIA, countADV, countEmpty);
+			score += score_window(countIA, countADV /*countEmpty*/);
 		}
 	}
 
 	// Diagonale ╱
-	for (int y = 0; y <= grid->height - N_ALIGN; y++)
+	for (unsigned int y = 0; y <= grid->height - N_ALIGN; y++)
 	{
-		for (int x = N_ALIGN - 1; x < grid->width; x++)
+		for (unsigned int x = N_ALIGN - 1; x < grid->width; x++)
 		{
 			int countIA = 0, countADV = 0, countEmpty = 0;
 			for (int k = 0; k < N_ALIGN; k++)
@@ -76,7 +76,7 @@ int evaluate_board(t_grid *grid)
 				else if (GRID_AT(grid, x-k, y+k) == PLAYER) countADV++;
 				else countEmpty++;
 			}
-			score += score_window(countIA, countADV, countEmpty);
+			score += score_window(countIA, countADV /*countEmpty*/);
 		}
 	}
 

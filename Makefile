@@ -8,8 +8,10 @@ FILES =	$(addprefix $(SRC_DIR)/, \
 	put_usage.c \
 	game_loop.c \
 	init/init_game.c \
-	display/display_grid.c \
 	destroy/destroy_game.c \
+	minimax/algo.c \
+	minimax/heuristic.c \
+	display/display_grid.c \
 )
 
 OBJS = $(addprefix $(BUILD_DIR)/, $(FILES:.c=.o))
@@ -23,7 +25,7 @@ LIBFT_NAME = ft
 
 INCLUDE_FLAGS = $(addprefix -I, $(INCLUDE_DIR) $(LIBFT_INCLUDE_DIR))
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 -MD -MP $(INCLUDE_FLAGS)
+CFLAGS = -Wall -Wextra -Werror -MD -MP $(INCLUDE_FLAGS)
 
 MAKEFLAGS = --no-print-directory
 
@@ -32,7 +34,7 @@ MAKEFLAGS = --no-print-directory
 all:	$(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -l$(LIBFT_NAME)
+	$(CC) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -l$(LIBFT_NAME) -lm
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
