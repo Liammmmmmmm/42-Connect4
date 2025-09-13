@@ -7,6 +7,9 @@
 		"string_view": "c",
 		"ranges": "c",
 		"span": "c",
-		"unistd.h": "c"
+		"unistd.h": "c",
+		"time.h": "c",
+		"stdlib.h": "c",
+		"defs.h": "c"
 	}
 }

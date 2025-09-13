@@ -11,12 +11,25 @@ void	place_jeton(t_grid *grid, int x, char player)
 	grid->level[x]++;
 }
 
+// void	display_debug_grid(t_grid *grid)
+// {
+// 	ft_printf("%u:%u\n", grid->width, grid->height);
+// 	ft_printf("%d %d %d %d %d %d %d %d\n", grid->level[0], grid->level[1], grid->level[2], grid->level[3], grid->level[4], grid->level[5], grid->level[6], grid->level[7]);
+// 	for (int i = grid->height - 1; i >= 0; i--)
+// 	{
+// 		for (unsigned int j = 0; j < grid->width; j++)
+// 		{
+// 			ft_printf("%d", GRID_AT(grid, j, i));
+// 		}
+// 		ft_printf("\n");
+// 	}
+// }
+
 int game_loop(t_game *game)
 {
 	while (!game->state)
 	{
 		display_grid(game);
-
 		if (game->player_turn == PLAYER)
 		{
 			int player_move = read_valid_column(game->grid.width, game->grid.level, game->grid.height);
@@ -32,8 +45,7 @@ int game_loop(t_game *game)
 		}
 		else
 		{
-			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, 1);
-			ft_printf("%d\n", ai_move);
+			int ai_move = find_best_move(&game->grid, game->grid.width, game->grid.height, 6);
 			place_jeton(&game->grid, ai_move, BOT);
 
 			// if (check_winner(game->grid, game->grid.width, game->grid.height, BOT))

@@ -3,6 +3,7 @@
 #include <math.h>
 
 #include "connect4.h"
+#include "libft.h"
 
 #define MAX 100
 
@@ -11,35 +12,46 @@ static int is_column_full(t_grid *grid, int col)
 	return grid->height == (unsigned int)grid->level[col];
 }
 
-static int get_available_row(t_grid *grid, int col)
+#include "libft.h"
+void	display_debug_grid(t_grid *grid)
 {
-	for (int row = grid->height - 1 ; row >= 0 ; row--)
+	ft_printf("%u:%u\n", grid->width, grid->height);
+	ft_printf("%d %d %d %d %d %d %d %d\n", grid->level[0], grid->level[1], grid->level[2], grid->level[3], grid->level[4], grid->level[5], grid->level[6], grid->level[7]);
+	for (int i = grid->height - 1; i >= 0; i--)
 	{
-		if (GRID_AT(grid, row, col) == EMPTY)
-			return row;
+		for (unsigned int j = 0; j < grid->width; j++)
+		{
+			ft_printf("%d", GRID_AT(grid, j, i));
+		}
+		ft_printf("\n");
 	}
-	return -1;
 }
 
-static float minimax(t_grid *grid, int depth, int alpha, int beta, int maximizingPlayer, int width, int height)
+void print_levels(t_grid *grid)
+{
+	ft_printf("%d %d %d %d %d %d %d %d\n", grid->level[0], grid->level[1], grid->level[2], grid->level[3], grid->level[4], grid->level[5], grid->level[6], grid->level[7]);
+}
+
+static float minimax(t_grid *grid, int depth, float alpha, float beta, int maximizingPlayer, int width, int height)
 {
 	if (depth == 0)
 		return evaluate_board(grid);
 
 	if (maximizingPlayer)
 	{
-		int maxEval = -MAX;
+		float maxEval = -INFINITY;
 		for (int col = 0 ; col < width ; col++)
 		{
 			if (is_column_full(grid, col)) continue;
 
-			int row = get_available_row(grid, col);
-			GRID_AT(grid, row, col) = BOT;
+			int row = grid->level[col];
+			grid->level[col]++;
+			GRID_AT(grid, col, row) = BOT;
 
-			int eval = minimax(grid, depth - 1, alpha, beta, 0, width, height);
+			float eval = minimax(grid, depth - 1, alpha, beta, 0, width, height);
 
-			GRID_AT(grid, row, col) = EMPTY;
-
+			grid->level[col]--;
+			GRID_AT(grid, col, row) = EMPTY;
 			maxEval = fmax(maxEval, eval);
 			alpha = fmax(alpha, eval);
 
@@ -50,17 +62,19 @@ static float minimax(t_grid *grid, int depth, int alpha, int beta, int maximizin
 	}
 	else
 	{
-		int minEval = MAX;
+		float minEval = INFINITY;
 		for (int col = 0 ; col < width ; col++)
 		{
 			if (is_column_full(grid, col)) continue;
 
-			int row = get_available_row(grid, col);
-			GRID_AT(grid, row, col) = PLAYER;
+			int row = grid->level[col];
+			grid->level[col]++;
+			GRID_AT(grid, col, row) = PLAYER;
 
-			int eval = minimax(grid, depth - 1, alpha, beta, 1, width, height);
+			float eval = minimax(grid, depth - 1, alpha, beta, 1, width, height);
 
-			GRID_AT(grid, row, col) = EMPTY;
+			grid->level[col]--;
+			GRID_AT(grid, col, row) = EMPTY;
 
 			minEval = fmin(minEval, eval);
 			beta = fmin(beta, eval);
@@ -81,22 +95,25 @@ int find_best_move(t_grid *grid, int width, int height, int depth)
 	for (int col = 0 ; col < width ; col++)
 	{
 		if (is_column_full(grid, col)) continue;
-
-		int row = get_available_row(grid, col);
-		GRID_AT(grid, row, col) = BOT;
-
-		float eval = minimax(grid, depth - 1, -MAX, MAX, 0, width, height);
-
-		GRID_AT(grid, row, col) = EMPTY;
-
-		printf("%f %f", eval, maxEval);
-
+		
+		int row = grid->level[col];
+		// print_levels(grid);
+		grid->level[col]++;
+		GRID_AT(grid, col, row) = BOT;
+		float eval = minimax(grid, depth - 1, -INFINITY, INFINITY, 0, width, height);
+		grid->level[col]--;
+		GRID_AT(grid, col, row) = EMPTY;
+		// print_levels(grid);
+		// printf("%f %f\n", eval, maxEval);
+		
 		if (eval > maxEval)
 		{
 			maxEval = eval;
 			bestMove = col;
 		}
 	}
+
+	// Ajouter une secu : si -1 prendre du random jsuqu'a tomber sur une col vide
 
 	return bestMove;
 }

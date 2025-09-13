@@ -26,18 +26,22 @@ static inline void	display_line(t_grid *grid, unsigned int yi)
 {
 	if (!GRID_AT(grid, 0, yi))
 		ft_printf("┃    ");
-	else if (GRID_AT(grid, 0, yi) < 0)
+	else if (GRID_AT(grid, 0, yi) == -1)
 		ft_printf("┃ 🔴 ");
-	else
+	else if (GRID_AT(grid, 0, yi) == 1)
 		ft_printf("┃ 🔵 "); // 🟢
+	else
+		ft_printf("│ ⚠️ ");
 	for (unsigned int xi = 0; xi < grid->width - 1; xi++)
 	{
 		if (!GRID_AT(grid, xi + 1, yi))
 			ft_printf("│    ");
-		else if (GRID_AT(grid, xi + 1, yi) < 0)
+		else if (GRID_AT(grid, xi + 1, yi) == -1)
 			ft_printf("│ 🔴 ");
-		else
+		else if (GRID_AT(grid, xi + 1, yi) == 1)
 			ft_printf("│ 🔵 ");
+		else 
+			ft_printf("│ ⚠️ ");
 	}
 	ft_printf("┃\n");
 }

@@ -7,9 +7,10 @@ static float score_window(int countIA, int countADV /*int countEmpty*/)
 	if (countIA > 0 && countADV > 0) return 0;
 	if (countIA == N_ALIGN) return INFINITY;    // victoire IA
 	if (countADV == N_ALIGN) return -INFINITY;  // victoire ADV
-	if (countIA > 0) return 10 * (int)pow(10, countIA - 1);
-	if (countADV > 0) return -10 * (int)pow(10, countADV - 1);
-	return 0;
+	float ret = 0;
+	if (countIA > 0) ret += 10 * (int)pow(10, countIA - 1);
+	if (countADV > 0) ret += -11 * (int)pow(10, countADV - 1);
+	return ret;
 }
 
 float evaluate_board(t_grid *grid)

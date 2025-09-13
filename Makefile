@@ -25,7 +25,7 @@ LIBFT_NAME = ft
 
 INCLUDE_FLAGS = $(addprefix -I, $(INCLUDE_DIR) $(LIBFT_INCLUDE_DIR))
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -MD -MP $(INCLUDE_FLAGS)
+CFLAGS = -Wall -Wextra -Werror -MD -MP -g3 $(INCLUDE_FLAGS)
 
 MAKEFLAGS = --no-print-directory
 
